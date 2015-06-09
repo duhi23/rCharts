@@ -32,10 +32,20 @@ data(economics, package = "ggplot2")
 econ <- transform(economics, date = as.character(date))
 m1 <- mPlot(x = "date", y = c("psavert", "uempmed"), type = "Line", data = econ)
 m1$set(pointSize = 0, lineWidth = 2)
+m1
 m1$print("chart2")
-m1$save('diego.html')
+m1$save('index.html', standalone=TRUE)
+servr::httd()
+
+
+m1$show('iframe', cdn=TRUE)
 
 m1$publish('Mi primer grafico')
+
+p5 <- nPlot(~ carb, data = mtcars, type='pieChart')
+p5$chart(donut=TRUE)
+p5
+
 
 
 
