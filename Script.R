@@ -8,30 +8,40 @@ install.packages('devtools', dependencies=TRUE)
 library(devtools)
 install_github('rCharts', 'ramnathv')
 library(rCharts)
+library(readxl)
 
 ## Paquete rCharts / Funciones
 ls("package:rCharts")
 
-# Ejemplo 1
-# Usando la data iris / eliminamos el signo . de los nombres de la base (Dispersion)
-names(iris) <- gsub("\\.", "", names(iris))
-colnames(iris)
-rPlot(SepalLength ~ SepalWidth | Species, data = iris, color = 'Species', type = 'point')
+data <- read_excel("proyeccion.xlsx", sheet=1, col_names = TRUE)
+data <- round(data[c("2015", "2020")]/1000)
+rownames(data) <- c("Costa", "Sierra", "Amazonia", "Insular", "No delimitado")
+class(data)
+data
 
-## Histogramas
-hair_eye = as.data.frame(HairEyeColor)
-rPlot(Freq ~ Hair | Eye, color = 'Eye', data = hair_eye, type = 'bar')
-
-
-r1 <- rPlot(mpg ~ wt | am + vs, data = mtcars, type = "point", color = "gear")
-r1$print("chart1")
+figu <- rCharts:::Highcharts$new()
+figu$chart(type = "line")
+figu$title(text = "Proyección Poblacional por regiones")
+figu$xAxis(categories = rownames(data))
+figu$yAxis(title = list(text = "Habitantes en miles"))
+figu$data(data)
+figu
+figu$save('index.html', standalone=TRUE)
+# Publicacion
+figu$publish('Proyección Poblacional')
 
 
 
 data(economics, package = "ggplot2")
 econ <- transform(economics, date = as.character(date))
 m1 <- mPlot(x = "date", y = c("psavert", "uempmed"), type = "Line", data = econ)
-m1$set(pointSize = 0, lineWidth = 2)
+m1$set(pointSize = 0, lineWidth = 1)
+m1$print("chart2")
+m1
+
+
+
+
 m1
 m1$print("chart2")
 m1$save('index.html', standalone=TRUE)
@@ -47,5 +57,9 @@ p5$chart(donut=TRUE)
 p5
 
 
+
+hair_eye_male <- subset(as.data.frame(HairEyeColor), Sex == "Male")
+n1 <- nPlot(Freq ~ Hair, group = "Eye", data = hair_eye_male, type = "multiBarChart")
+n1$print("chart3")
 
 
