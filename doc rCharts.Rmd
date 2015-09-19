@@ -1,0 +1,11 @@
+---
+title: "Grafico dinamico"
+author: "SSL"
+output: html_document
+---
+
+```{r, echo=FALSE, results='asis', comment=NA}
+library(rCharts)
+r1 <- rPlot(mpg ~ wt | am + vs, data = mtcars, type = "point", color = "gear")
+r1$print('iframesrc', include_assets=TRUE)
+```
