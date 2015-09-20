@@ -4,8 +4,20 @@ author: "SSL"
 output: html_document
 ---
 
+Este es un primer ejemplo con rCharts:
+
 ```{r, echo=FALSE, results='asis', comment=NA}
 library(rCharts)
 r1 <- rPlot(mpg ~ wt | am + vs, data = mtcars, type = "point", color = "gear")
 r1$print('iframesrc', include_assets=TRUE)
+```
+
+Mostramos un segundo ejemplo:
+
+```{r, echo=FALSE, results='asis', comment=NA}
+data(economics, package = "ggplot2")
+econ <- transform(economics, date = as.character(date))
+m1 <- mPlot(x = "date", y = c("psavert", "uempmed"), type = "Line", data = econ)
+m1$set(pointSize = 0, lineWidth = 1)
+m1$print('iframesrc', include_assets=TRUE)
 ```
