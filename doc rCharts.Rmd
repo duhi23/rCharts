@@ -23,3 +23,11 @@ m1$set(pointSize = 0, lineWidth = 1)
 #m1$show('iframesrc', cdn = TRUE)
 m1$show('inline', include_assets = TRUE)
 ```
+
+Un ejemplo más:
+
+```{r results = 'asis', comment = NA, cache = F}
+library(rCharts)
+n1 <- nPlot(mpg ~ wt, data = mtcars, type = 'scatterChart')
+n1$show('inline', include_assets = TRUE)
+```
